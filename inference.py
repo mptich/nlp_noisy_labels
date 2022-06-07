@@ -11,6 +11,7 @@ import utils
 
 input_csv = sys.argv[1]
 model_file = sys.argv[2]
+new_train_file = sys.argv[3]
 
 device = utils.GetDevice()
 
@@ -25,6 +26,7 @@ for id, cl in dout.items():
     inf_label = utils.ClassToLabel(cl)
     act_label = df.loc[id, "actual_label"]
     label = df.loc[id, "label"]
+    df.loc[id, "label"] = inf_label
     if inf_label == act_label:
         if act_label != label:
             good_fix += 1
@@ -35,3 +37,5 @@ for id, cl in dout.items():
             bad_fix += 1
            
 print("Good fix %d, bad to bad %d, bad fix %d" % (good_fix, bad_to_bad, bad_fix))
+
+df.to_csv(new_train_file, index_label="id", index=False)

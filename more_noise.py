@@ -31,5 +31,5 @@ for al, llist in d.items():
    train_df.loc[index:index, "label"] = l
    index_set.remove(index)
 
-train_df.to_csv(out_csv)
+train_df.to_csv(out_csv, index_label="id", index=False)
    
